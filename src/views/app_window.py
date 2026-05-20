@@ -65,7 +65,10 @@ class AppWindow(QMainWindow):
         self.validation_view.setWindowTitle("Validation")
         self.validation_view.resize(900, 650)
         self.annomate_view = AnnoMateWindow(
-            dataset_model, io_controller, inference_model, inference_controller,
+            dataset_model,
+            io_controller,
+            inference_model,
+            inference_controller,
             calibration_model=calibration_model,
         )
 

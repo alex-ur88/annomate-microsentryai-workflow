@@ -7,7 +7,6 @@ Color scheme: no explicit stylesheet colors — Qt platform palette only.
 import logging
 import os
 
-import cv2
 import numpy as np
 from PySide6.QtCore import Qt, QEvent, QPoint, QPointF, Signal
 from PySide6.QtGui import QColor
@@ -208,7 +207,9 @@ class _ReviewBar(QFrame):
 
     def mousePressEvent(self, event) -> None:
         handle_rect = self._drag_handle.geometry()
-        if event.button() == Qt.LeftButton and handle_rect.contains(event.position().toPoint()):
+        if event.button() == Qt.LeftButton and handle_rect.contains(
+            event.position().toPoint()
+        ):
             self._dragging = True
             self._drag_start = event.position().toPoint()
             event.accept()
@@ -529,6 +530,7 @@ class AnnoMateWindow(QWidget):
         import math
         from views.annomate.calibration_dialog import CalibrationDialog
         from PySide6.QtWidgets import QDialog
+
         if self._calib_model is None:
             return
         pixel_dist = math.hypot(p2[0] - p1[0], p2[1] - p1[1])
@@ -538,7 +540,9 @@ class AnnoMateWindow(QWidget):
             self._calib_model.set_calib_points(p1, p2)
             ok = self._calib_model.apply_calibration(real_dist, unit)
             if not ok:
-                QMessageBox.warning(self, "Calibration", "The two points are too close together.")
+                QMessageBox.warning(
+                    self, "Calibration", "The two points are too close together."
+                )
         self.canvas.set_tool(None)  # clears _pending_calib_pts, resets cursor
         self.tool_palette.deselect_all()
         self.viewport_actions.set_active_tool("")
